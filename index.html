@@ -1,0 +1,298 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sol Mart & Coffee</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="theme-about">
+    <div class="wrapper">
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <button class="btn-nav" style="background:#000; color:#fff;" onclick="closeSidebar()">❮ Quay lại</button>
+            </div>
+
+
+
+            <ul class="sidebar-menu">
+                <li><a href="#" onclick="showPageView('home')"><i class="fas fa-home"></i> Trang chủ</a></li>
+                <li><hr style="border:1px solid #000; margin:10px 0;"></li>
+                <li><a href="#" onclick="showPageView('cart')"><i class="fas fa-shopping-cart"></i> Giỏ hàng (<span id="cart-count">0</span>)</a></li>
+                <li><a href="#" onclick="showPageView('orders')"><i class="fas fa-box"></i> Đơn hàng</a></li>
+                <li><a href="#" onclick="showPageView('notifications')"><i class="fas fa-bell"></i> Thông báo ( 3 )</a></li>
+                <li><a href="#" onclick="showPageView('language')"><i class="fas fa-globe"></i> Ngôn ngữ</a></li>
+                <li><a href="#" onclick="showPageView('settings')"><i class="fas fa-cog"></i> Cài đặt</a></li>
+                <li><a href="#" onclick="showPageView('aboutme')"><i class="fa-solid fa-circle-info"></i> Về chúng tôi</a></li>
+                <li><a href="#" onclick="showPageView('contact')"><i class="fa-solid fa-address-book"></i> Liên Hệ </a></li>
+                <li><hr style="border:1px solid #000; margin:10px 0;"></li>
+
+                <li id="menu-auth-section" style="margin-top: 20px;">
+                    <a href="dangnhap.html" id="btn-menu-login" style="background: #00FF99; color: #000; font-weight: 800; border: 2px solid #000; border-radius: 8px; box-shadow: 3px 3px 0px #000; text-align: center; justify-content: center;">
+                        <i class="fas fa-sign-in-alt"></i> ĐĂNG NHẬP
+                    </a>
+
+                    <div id="user-logged-box" style="display: none; flex-direction: column; gap: 8px; width: 100%;">
+                        <div style="font-size: 13px; font-weight: 900; text-align: center; background: #fff; border: 2px solid #000; padding: 5px; border-radius: 6px;">
+                            Hi, <span id="menu-username" style="color: #FF8080;">User</span>!
+                        </div>
+                        <a href="#" onclick="handleLogout(event)" style="background: #FF8080; color: #000; font-weight: 800; border: 2px solid #000; border-radius: 8px; box-shadow: 3px 3px 0px #000; text-align: center; justify-content: center;">
+                            <i class="fas fa-sign-out-alt"></i> ĐĂNG XUẤT
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+        <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
+
+
+
+
+        <header class="main-header">
+            <div class="header-left">
+                <button class="btn-nav" onclick="openSidebar()">☰</button>
+                <img src="AnhLogo/LogoSol.png" alt="Sol" class="logo-img">
+                <img src="AnhLogo/LogoDHHL.png" alt="Sol" class="logo-img">
+            </div>
+            <nav class="nav-links">
+
+                <button id="btn-about" class="btn-nav " onclick="changeTab('about')">Tin tức</button>
+                <button id="btn-coffee" class="btn-nav" onclick="changeTab('coffee')">Coffee</button>
+                <button id="btn-mart" class="btn-nav" onclick="changeTab('mart')">Mart</button>
+            </nav>
+        </header>
+
+
+
+
+        <main class="container">
+
+            <div class="search-container">
+                <div class="search-box">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" id="main-search" placeholder="Bạn muốn tìm gì hôm nay?" oninput="handleSearch()">
+                </div>
+            </div>
+
+
+
+
+
+
+            <div id="view-home" class="page-view">
+                <div id="section-about">
+                    <h2 class="title-border"><i class="fas fa-newspaper"></i>  TIN TỨC SOL</h2>
+                    <div class="white-item-box" style="display:block;">
+                        <h3>Chào mừng tân sinh viên tới với Sol!</h3>
+                        <p>Vuốt xuống để xem thêm các mặt báo mới nhất.</p>
+                    </div>
+
+                    <div id="news-list"></div>
+                </div>
+                <div id="section-products" style="display:none;"><div id="product-shelves"></div></div>
+            </div>
+
+            <div id="view-cart" class="page-view" style="display:none;">
+                <h2 class="title-border"><i class="fas fa-shopping-cart"></i> GIỎ HÀNG</h2>
+
+                <div id="cart-items-list"></div>
+
+                <div id="cart-summary-box" style="display:none; margin-top:20px; background:#fff; padding:15px; border:3px solid #000; border-radius:15px; box-shadow:4px 4px 0 #000;">
+                    <p style="font-weight:bold;">Tổng tiền: <span id="total-price" style="color:red;">0đ</span></p>
+                    <button class="btn-nav" style="width:100%; background:#ee4d2d; color:#fff; margin-top:10px;" onclick="checkout()">ĐẶT HÀNG NGAY</button>
+                </div>
+            </div>
+
+            <div id="view-orders" class="page-view" style="display:none;">
+                <h2 class="title-border"><i class="fas fa-box"></i> LỊCH SỬ ĐƠN HÀNG</h2>
+                <div id="orders-list"></div>
+            </div>
+
+
+
+
+            <div id="view-notifications" class="page-view" style="display:none;">
+                <h2 class="title-border">THÔNG BÁO</h2>
+                <div class="white-item-box">Nếu có lỗi vui lòng liên hệ để báo cáo!</div>
+                <div class="white-item-box">Hệ thống vừa cập nhật lên phiên bản 2.8.0 </div>
+                <div class="white-item-box">Chào mừng tới với Sol ! </div>
+            </div>
+
+
+
+
+            <div id="view-language" class="page-view" style="display:none;">
+                <h2 class="title-border">NGÔN NGỮ</h2>
+                <div class="white-item-box">Tiếng Việt          (Mặc định)</div>
+                <div class="white-item-box">Tiếng Anh           (Chưa hỗ trợ)</div>
+                <div class="white-item-box">Tiếng Trung         (Chưa hỗ trợ)</div>
+                <div class="white-item-box">Tiếng Lào          (Chưa hỗ trợ)</div>
+
+            </div>
+
+
+
+
+            <div id="view-settings" class="page-view" style="display:none;">
+                <h2 class="title-border">CÀI ĐẶT</h2>
+                <div class="white-item-box" onclick="toggleDarkMode()">Chế độ giao diện: <span id="txt-darkmode">Sáng</span></div>
+                <div class="white-item-box" onclick="toggleContrast()">Tương phản đậm: <span id="txt-contrast">Tắt</span></div>
+                <div class="white-item-box" onclick="toggleReducedMotion()">Giảm chuyển động <span id="txt-motion">Tắt</span></div>
+
+                <div class="white-item-box">Phiên bản 2.8.0 (Ổn định)</div>
+            </div>
+
+
+
+            <div id="view-aboutme" class="page-view" style="display:none;">
+                <h2 class="title-border">Về chúng tôi</h2>
+
+                <div class="white-item-box"> Nhóm Trung và Phú Thiết kế Web SOL-DHHL  </div>
+                <div class="white-item-box"> Giao diện và UI: Trung </div>
+                <div class="white-item-box"> Hiệu ứng và hình ảnh: Trung  </div>
+                <div class="white-item-box"> Ý tưởng: Trung  </div>
+                <div class="white-item-box"> Viết Báo Cáo: Trung và Phú.  </div>
+            </div>
+
+            
+
+
+
+
+            <div id="view-contact" class="page-view" style="display:none;">
+                <h2 class="title-border">Để lại Liên hệ <i class="fas fa-paper-plane"></i></h2>
+
+                <div class="white-item-box">
+                    <!-- Khung container chứa cả 2 cột ngang -->
+                    <div class="contact-container-flex">
+
+                        <!-- CỘT TRÁI: FORM NHẬP THÔNG TIN -->
+                        <div class="contact-form-side">
+                            <form method="post" action="#">
+                                <div class="contact-box">
+                                    <div class="form-group">
+                                        <label for="name">Tên</label>
+                                        <input type="text" name="name" id="name" value="" placeholder="Nhập họ và tên...">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="email">Email</label>
+                                        <input type="email" name="email" id="email" value="" placeholder="example@gmail.com">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="message">Thông tin muốn gửi</label>
+                                        <textarea name="message" id="message" rows="6" placeholder="Bạn cần SOL hỗ trợ điều gì..."></textarea>
+                                    </div>
+                                </div>
+
+                                <button class="btn-submit-contact" onclick="submitContactForm(event)">Gửi thông tin ngay</button>
+                            </form>
+                        </div>
+
+                        <!-- CỘT PHẢI: BẢN ĐỒ GOOGLE MAPS -->
+                        <div class="contact-map-side">
+                            <!-- Bản đồ trỏ thẳng về số 258 Bạch Đằng, Vàng Danh, Uông Bí, Quảng Ninh -->
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d2941.1476965389506!2d106.81706722382825!3d21.018325252237066!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1svi!2s!4v1780502967509!5m2!1svi!2s"
+                                    allowfullscreen=""
+                                    loading="lazy"
+                                    referrerpolicy="no-referrer-when-downgrade">
+                            </iframe>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </main>
+
+
+
+
+
+
+
+
+        <div id="modal-detail" class="modal">
+            <div class="modal-content">
+                <span class="close-modal" onclick="closeModal()">&times;</span>
+                <div id="modal-body-content">
+                </div>
+            </div>
+        </div>
+
+
+        
+
+
+        <footer class="main-footer">
+            <div class="footer-container">
+                <!-- Cột 1: Thông tin thương hiệu & Kết nối -->
+                <div class="footer-col brand-info">
+                    <div class="footer-logos">
+                        <img src="AnhLogo/LogoSol.png" alt="Sol Logo" class="footer-logo-img">
+                        <img src="AnhLogo/LogoDHHL.png" alt="DHHL Logo" class="footer-logo-img">
+                    </div>
+                    <h3 class="footer-brand-title">Sol Mart & Coffee</h3>
+                    <p class="footer-slogan">SolTeam - Chất lượng đặt hàng đầu</p>
+                    <div class="social-icons">
+                        <a href="#" title="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="https://www.tiktok.com/@ph.solhhl?_r=1&_t=ZS-95mYnmPZQam" title="Tiktok"><i class="fab fa-tiktok"></i></a>
+                        <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" title="Youtube"><i class="fab fa-youtube"></i></a>
+                        <a href="#" title="Telegram"><i class="fab fa-telegram"></i></a>
+                    </div>
+                </div>
+
+                <!-- Cột 2: Thông tin liên hệ trực quan -->
+                <div class="footer-col">
+                    <h4><i class="fa-solid fa-address-book"></i> THÔNG TIN LIÊN HỆ</h4>
+                    <ul class="footer-links-list">
+                        <li><a href="#view-contact" onclick="showPageView('contact')"><i class="fa-solid fa-location-dot"></i> Số 258 Bạch Đằng, P. Vàng Danh, Uông Bí, Quảng Ninh</a></li>
+                        <li><a href="tel:0987654321"><i class="fas fa-phone"></i> Hotline: 0987.654.321</a></li>
+                        <li><a href="mailto:Sol@Email.vn"><i class="fas fa-envelope"></i> Email: Sol@Email.vn</a></li>
+                        <li><i class="fas fa-clock"></i> Mở cửa: 6h30 - 18h30 (Cả tuần)</li>
+                    </ul>
+                </div>
+
+                <!-- Cột 3: Hỗ trợ khách hàng & Chính sách (Học tập từ Hasaki & Anh Hòa) -->
+                <div class="footer-col">
+                    <h4><i class="fas fa-shield-alt"></i> CHÍNH SÁCH & HỖ TRỢ</h4>
+                    <ul class="footer-links-list">
+                        <li><a href="#"><i class="fas fa-angle-right"></i> Chính sách bảo mật thông tin</a></li>
+                        <li><a href="#"><i class="fas fa-angle-right"></i> Quy định và hình thức thanh toán</a></li>
+                        <li><a href="#"><i class="fas fa-angle-right"></i> Chính sách đổi trả sản phẩm</a></li>
+                        <li><a href="#"><i class="fas fa-angle-right"></i> Chính sách vận chuyển / Giao hàng</a></li>
+                        <li><a href="#"><i class="fas fa-angle-right"></i> Câu hỏi thường gặp (FAQs)</a></li>
+                    </ul>
+                </div>
+
+                <!-- Cột 4: Đăng ký nhận tin khuyến mãi & Chứng nhận -->
+                <div class="footer-col">
+                    <h4><i class="fas fa-paper-plane"></i> CẬP NHẬT KHUYẾN MÃI</h4>
+                    <p style="font-size: 13px; margin-bottom: 12px; opacity: 0.9;">Đăng ký để nhận thông báo về menu mới và ưu đãi sớm nhất từ SOL.</p>
+
+                    <form class="footer-subscribe-form" onsubmit="event.preventDefault(); alert('Đăng ký nhận tin thành công!');">
+                        <input type="email" placeholder="Nhập email của bạn..." required>
+                        <button type="submit"><i class="fas fa-paper-plane"></i></button>
+                    </form>
+
+                    <div class="footer-certifications" style="margin-top: 15px;">
+                        <!-- Giả lập nhãn Đã Thông Báo Bộ Công Thương giống Hasaki và Anh Hòa -->
+                        <a href="#" class="btn-bct"><i class="fa-solid fa-circle-check" style="color: #00FF99;"></i> ĐÃ THÔNG BÁO</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Thanh bản quyền đáy chân trang -->
+            <div class="footer-bottom">
+                <p>© 2026 Bản quyền thuộc về <b>Trung</b> & <b>Phú</b> | SOL-DHHL Project</p>
+            </div>
+        </footer>
+
+        </div>
+    <script src="script.js"></script>
+</body>
+</html>
