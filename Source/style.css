@@ -1,0 +1,1019 @@
+﻿/* --- 1. BIẾN CHO LIGHT MODE (GỐC) --- */
+/* Đặt ở :root để mọi thẻ (như .cart-item-row) luôn có màu để dùng */
+:root {
+    --bg-about: #B2EBF2;
+    --bg-coffee: #FFDB99;
+    --bg-mart: #FF8080;
+    --bg-green: #C8E6C9;
+    --header-gradient: linear-gradient(135deg, #7DB2DD 0%, #ffffff 100%);
+    /* Các biến màu cho thẻ sản phẩm/giỏ hàng */
+    --text-color: #000000;
+    --card-bg: #ffffff;
+    --border-color: #000000;
+    --border-main: #000000;
+    --box-shadow-color: #333;
+}
+
+/* --- 2. BIẾN CHO DARK MODE --- */
+/* Khi bật Dark Mode, các biến trên sẽ được "ghi đè" giá trị mới */
+body.dark-mode {
+    --bg-about: #001418;
+    --bg-coffee: #201f00;
+    --bg-mart: #331a1a;
+    --bg-green: #001601;
+    --text-color: #ffffff;
+    --card-bg: #2d2d2d;
+    --border-color: #ffffff;
+    --box-shadow-color: rgba(255,255,255,0.1);
+    --header-gradient: linear-gradient(135deg, #2c3e50 0%, #000000 100%);
+    --border-main: #ffffff;
+}
+
+/* --- 3. BIẾN CHO TƯƠNG PHẢN  --- */
+body.high-contrast {
+    --border-width: 4px; /* Viền dày hơn gấp đôi */
+    --box-shadow: 6px 6px 0 #000;
+    --text-color: #000000;
+    --card-bg: #ffffff;
+    --border-color: #000000;
+    --box-shadow: 4px 4px 0 #000;
+    --border-width: 4px;
+}
+
+
+ 
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    overflow-x: hidden;
+    color: var(--text-color);
+}
+
+
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Tùy chọn cho cài đặt Giảm chuyển động */
+body.reduced-motion * {
+    transition: none !important;
+    animation: none !important;
+}
+
+/* Biến Theme Tùy chỉnh cho cả Light và Dark mode  */
+.theme-about {background-color: var(--bg-about) !important;}
+body.dark-mode .theme-about {background-color: #121212 !important;}
+
+.theme-coffee {background-color: var(--bg-coffee) !important;}
+body.dark-mode .theme-coffee {background-color: #1e1e1e !important;}
+
+.theme-mart {background-color: var(--bg-mart) !important;}
+body.dark-mode .theme-mart {background-color: #2d1a1a !important;}
+
+.view-green {background-color: var(--bg-green) !important;}
+
+
+
+
+
+
+/* HEADER - Đầu Trang  */
+.main-header {
+    background: var(--header-gradient);
+    padding: 10px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: var(--border-width) solid var(--border-color);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    height: 100%;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    height: 100%;
+}
+
+.logo-img {
+    position: relative;
+    top: 0px;
+    left: 0px;
+    height: 40px;
+    width: auto;
+   
+}
+
+ .btn-nav {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px; /* Ép các nút Coffee/Mart/Menu có cùng chiều cao */
+    padding: 0 12px;
+    border: 2px solid #000;
+    background: #fff;
+    font-weight: bold;
+    border-radius: 8px;
+    box-shadow: 2px 2px 0px #000;
+    cursor: pointer;
+    position: relative; /* Để dùng top/bottom nếu cần nhích nhẹ */
+}
+
+.active-coffee {
+    background-color: #FFD54F !important;
+    color: var(--card-bg) !important;
+}
+
+.active-mart {
+    background-color: #EF5350 !important;
+    color: #fff !important;
+}
+
+.active-about {
+    background-color: aqua !important;
+    color: #fff !important
+}
+
+/* Kết thúc Header - Đầu trang */
+
+
+
+
+
+/* Thanh bên menu settings  - SIDEBAR Menu */
+.sidebar {
+    position: fixed;
+    left: -310px;
+    width: 280px;
+    height: 100%;
+    background: var(--bg-green) !important;
+    transition: 0.4s;
+    z-index: 2000;
+    padding: 20px;
+    border-right: var(--border-width) solid var(--border-color) !important;
+    border: var(--border-width) solid var(--border-color) !important;
+    box-shadow: 10px 10px 10px var(--box-shadow-color) !important;
+    visibility: hidden;
+}
+
+    .sidebar.active {
+        left: 0;
+        visibility: visible;
+    }
+
+.sidebar-menu {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+}
+
+
+    .sidebar-menu li a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background: #fff;
+        border: 2px solid #000;
+        padding: 12px;
+        border-radius: 12px;
+        text-decoration: none;
+        color: #000;
+        font-weight: bold;
+        margin-bottom: 10px;
+        box-shadow: 2px 2px 0 #000;
+    }
+
+    /* Kết thúc thanh bên Sidebar Menu */
+
+
+
+/*  banner ảnh tin tức */
+.banner-container {
+    width: 100%;
+    overflow: hidden;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    border: 3px solid #000;
+    box-shadow: 8px 8px 0px rgba(0,0,0,0.2);
+    display: none; /* Mặc định ẩn, chỉ hiện ở trang chủ */
+}
+
+.banner-wrapper img {
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+    display: none; /* Ẩn hết ảnh, dùng JS để hiện từng cái */
+}
+
+    .banner-wrapper img.active {
+        display: block;
+        animation: fadeIn 0.5s;
+    }
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+/* Kết thúc banner */
+
+/* aside bar tin tức */
+.main-layout {
+    display: grid;
+    grid-template-columns: 1fr 300px; /* Cột trái tự do, cột phải 300px */
+    gap: 20px;
+}
+
+@media (max-width: 900px) {
+    .main-layout {
+        grid-template-columns: 1fr;
+    }
+    /* Mobile thì sidebar xuống dưới hoặc ẩn */
+    .right-sidebar {
+        display: none;
+    }
+}
+
+/* aside bar tin tức kết thúc */
+
+
+.right-sidebar {
+    background: var(--card-bg);
+    border: 3px solid #000;
+    border-radius: 15px;
+    padding: 15px;
+    height: fit-content;
+}
+
+
+/* Thẻ tên và mặt hàng  */
+.container {
+    flex: 1;
+    padding: 15px;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+@media (min-width: 768px) {
+    .product-grid {
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        gap: 20px;
+    }
+}
+
+.card {
+    background: var(--card-bg) !important;
+    border: 2px solid var(--text-color) !important;
+    padding: 10px;
+    border-radius: 15px;
+    box-shadow: 3px 3px 0 #000;
+    display: flex;
+    flex-direction: column;
+    min-height: 280px;
+}
+
+.card-img-box {
+    height: 110px;
+    background: #eee;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    border: 1px solid #ddd;
+}
+
+    .card-img-box img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+
+/* NÚT XÓA */
+.white-item-box {
+    background-color: var(--card-bg) !important;
+    color: var(--text-color) !important;
+    border: solid var(--text-color) !important;
+    padding: 15px;
+    border-radius: 15px;
+    margin-bottom: 12px;
+    box-shadow: 3px 3px 0 var(--box-shadow-color) !important;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.close-btn {
+    background: #ff4444;
+    color: white;
+    border: 2px solid #000;
+    width: 30px;
+    height: 30px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    box-shadow: 1px 1px 0 #000;
+}
+
+.title-border {
+    background-color: var(--card-bg) !important;
+    color: var(--text-color) !important;
+    border: 3px solid var(--border-main); /* Sửa viền luôn */
+    padding: 8px 15px;
+    border-radius: 8px;
+    margin: 20px 0;
+    font-weight: bold;
+    box-shadow: 3px 3px 0 var(--box-shadow-color);
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+
+
+
+
+
+
+
+
+
+
+/* FOOTER - Chân trang  */
+
+.main-footer {
+    background: #222222; /* Màu nền tối sang trọng giống Hasaki/Anh Hòa */
+    color: #ffffff;
+    border-top: var(--border-width) solid var(--border-color); /* Đồng bộ viền dày của hệ thống */
+    padding: 40px 20px 15px 20px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Container chia cột bằng Grid hệ thống */
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(1, 1fr); /* Mặc định 1 cột trên điện thoại nhỏ */
+    gap: 30px;
+    padding-bottom: 30px;
+    border-bottom: 2px dashed rgba(255, 255, 255, 0.2); /* Đường gạch đứt đoạn phân cách */
+}
+
+/* Định dạng từng cột */
+.footer-col {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+    .footer-col h4 {
+        font-size: 15px;
+        font-weight: 800;
+        color: #FFEB3B; /* Màu vàng thương hiệu nổi bật trên nền tối */
+        margin-bottom: 15px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+/* Định dạng cột thương hiệu */
+.brand-info {
+    align-items: flex-start;
+}
+
+.footer-logos {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.footer-logo-img {
+    height: 35px;
+    width: auto;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 3px;
+    border: 1px solid #000;
+    border-radius: 6px;
+}
+
+.footer-brand-title {
+    font-size: 20px;
+    font-weight: 900;
+    text-transform: uppercase;
+    color: #ffffff;
+    margin-bottom: 5px;
+}
+
+.footer-slogan {
+    font-weight: bold;
+    color: #00FF99; /* Màu xanh lá Neon đặc trưng */
+    font-size: 13px;
+    margin-bottom: 15px;
+}
+
+/* Danh sách liên kết và icon định vị */
+.footer-links-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+    .footer-links-list li {
+        font-size: 13.5px;
+        margin-bottom: 10px;
+        line-height: 1.5;
+        color: #e0e0e0;
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+        .footer-links-list li a {
+            color: #e0e0e0;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+            .footer-links-list li a:hover {
+                color: #00FF99; /* Đổi màu xanh khi di chuột */
+                text-decoration: underline;
+            }
+
+/* Khung mạng xã hội */
+.social-icons {
+    display: flex;
+    gap: 12px;
+    margin-top: 5px;
+}
+
+    .social-icons a {
+        color: #000000;
+        background: #ffffff;
+        border: 2px solid #000000;
+        width: 34px;
+        height: 34px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        box-shadow: 2px 2px 0px #000000; /* Đổ bóng Neumorphism */
+        transition: all 0.1s ease;
+    }
+
+        .social-icons a:hover {
+            background: #00FF99;
+            transform: translate(-1px, -1px);
+            box-shadow: 3px 3px 0px #000000;
+        }
+
+/* Form đăng ký nhận email  */
+.footer-subscribe-form {
+    display: flex;
+    background: #ffffff;
+    border: 2px solid #000000;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 3px 3px 0px #000000;
+    max-width: 280px;
+}
+
+    .footer-subscribe-form input {
+        border: none;
+        outline: none;
+        padding: 10px 12px;
+        font-size: 13px;
+        font-weight: bold;
+        flex: 1;
+        background: transparent;
+    }
+
+    .footer-subscribe-form button {
+        background: #00FF99;
+        border: none;
+        border-left: 2px solid #000000;
+        padding: 0 15px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: background 0.2s;
+    }
+
+        .footer-subscribe-form button:hover {
+            background: #00e68a;
+        }
+
+/* Nhãn GLBCT */
+.btn-bct {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: #004d40;
+    color: #fff !important;
+    border: 2px solid #000;
+    padding: 5px 10px;
+    font-size: 11px;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 4px;
+    box-shadow: 2px 2px 0 #000;
+}
+
+/* Phần bản quyền đáy trang */
+.footer-bottom {
+    text-align: center;
+    padding-top: 15px;
+    font-size: 12px;
+    opacity: 0.7;
+}
+
+/* RESPONSIVE: Tự động chia cột trên màn hình máy tính và máy tính bảng */
+@media (min-width: 600px) {
+    .footer-container {
+        grid-template-columns: repeat(2, 1fr); /* 2 cột cho Tablet */
+    }
+}
+
+@media (min-width: 992px) {
+    .footer-container {
+        grid-template-columns: repeat(4, 1fr); /* 4 cột hoàn chỉnh cho PC giống Hasaki */
+        gap: 20px;
+    }
+}
+
+/* Kết thúc phần chân trang - FOOTER */
+
+
+
+
+
+
+
+
+
+
+
+/* --- PHẦN TIN TỨC SOL NEWS --- */
+
+/* Khung chứa các bài báo */
+.news-container {
+    display: grid;
+    grid-template-columns: 1fr; /* Mặc định 1 cột cho điện thoại - Thẻ to bản */
+    gap: 25px;
+    margin-top: 20px;
+}
+
+/* Thẻ tin tức */
+.news-card {
+    background: #fff;
+    background-color: var(--card-bg) !important;
+    border: 2px solid var(--border-main);
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 10px 10px 0px var(--box-shadow-color) !important;
+    display: flex;
+    flex-direction: column;
+    transition: 0.3s;
+}
+
+    .news-card:hover {
+        transform: translate(-2px, -2px);
+        box-shadow: 8px 8px 0px #000;
+    }
+
+/* Ảnh tin tức - Tỷ lệ 16:9 chuẩn báo chí */
+.news-img-box {
+    width: 100%;
+    height: 200px;
+    background: #ddd;
+    border-bottom: 3px solid #000;
+}
+
+    .news-img-box img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+/* Nội dung bài báo */
+.news-content {
+    padding: 15px;
+    color: var(--border-main);
+}
+
+.news-tag {
+    display: inline-block;
+    background: #FFEB3B;
+    border: 2px solid #000;
+    padding: 2px 8px;
+    border-radius: 5px;
+    font-size: 11px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.news-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    line-height: 1.3;
+}
+
+.news-summary {
+    font-size: 14px;
+    color: var(--border-main);
+    margin-bottom: 15px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Giới hạn 2 dòng tóm tắt */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.news-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    font-style: italic;
+}
+
+/* Tùy chỉnh cho máy tính (PC) và tối ưu hóa giao diện  */
+@media (min-width: 768px) {
+    .news-container {
+        grid-template-columns: repeat(2, 1fr); /* Chia làm 2 cột to trên PC */
+    }
+
+    .news-img-box {
+        height: 250px; /* Ảnh to hơn trên máy tính */
+    }
+}
+
+
+/* --- CSS CHO THẺ HÀNG TRONG GIỎ --- */
+.cart-item-row {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: var(--card-bg) !important;
+    color: var(--text-color) !important;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 2px solid #000;
+    border-radius: 12px;
+    box-shadow: 2px 2px 0 #000;
+}
+
+.cart-item-img {
+    width: 65px;
+    height: 65px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid #000;
+}
+
+.cart-item-info {
+    flex: 1;
+}
+
+.cart-qty-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-qty {
+    width: 30px;
+    height: 30px;
+    border: 2px solid #000;
+    background: #fff;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 6px;
+    font-size: 16px;
+}
+
+    .btn-qty:active {
+        transform: scale(0.9);
+    }
+
+
+
+/* --- CSS CHO MODAL nút CHI TIẾT và XEM THÊM  --- */
+.modal {
+    display: none; /* Mặc định ẩn */
+    position: fixed;
+    z-index: 3000;
+    inset: 0;
+    background: rgba(0,0,0,0.7); /* Làm tối nền */
+    backdrop-filter: blur(5px); /* Làm mờ nền kiểu hiện đại */
+}
+
+.modal-content {
+    background: #fff;
+    margin: 10% auto;
+    padding: 20px;
+    width: 90%;
+    max-width: 500px;
+    border: 3px solid #000;
+    border-radius: 20px;
+    position: relative;
+    box-shadow: 10px 10px 0px rgba(0,0,0,0.5);
+    max-height: 80vh;
+    overflow-y: auto; /* Cuộn nếu nội dung quá dài */
+}
+
+.close-modal {
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#modal-body-content img {
+    width: 100%;
+    border-radius: 12px;
+    border: 2px solid #000;
+}
+
+
+/* --- CSS CHO THANH TÌM KIẾM --- */
+.search-container {
+    margin-bottom: 20px;
+   
+}
+
+.search-box {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border: 3px solid var(--border-main) !important;
+    border-radius: 12px;
+    padding: 5px 15px;
+    box-shadow: 3px 3px 1px 1px var(--border-main) !important;
+    transition: 0.3s;
+}
+
+    .search-box:focus-within {
+        transform: translate(-2px, -2px);
+        box-shadow: 6px 6px 0px #000;
+    }
+
+.search-icon {
+    font-size: 18px;
+    margin-right: 10px;
+    color: #555;
+}
+
+#main-search {
+    border: none;
+    outline: none;
+    width: 100%;
+    padding: 10px 0;
+    font-size: 16px;
+    font-weight: bold;
+    background: transparent;
+}
+
+
+/* --- CHÚ THÍCH: CSS CHO CÁC TÍNH NĂNG MỚI --- */
+.search-box {
+    background: var(--card-bg);
+    border: var(--border-width) solid var(--border-color);
+    color: var(--text-color);
+}
+
+#main-search {
+    background: transparent;
+    color: var(--text-color);
+}
+
+
+
+/* Phần CSS cho contact - Liên lạc */
+.contact-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 15px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* 2. Thiết kế chiếc Hộp trắng chính (Đồng bộ đổ bóng dày với SOL) */
+.contact-box {
+    background: #ffffff;
+    border: 3px solid #000000; /* Viền đen dày đặc trưng */
+    border-radius: 16px; /* Bo góc mềm mại giống thẻ game */
+    padding: 30px; /* Tạo không gian thở rộng rãi bên trong */
+    width: 100%;
+    max-width: 480px; /* Độ rộng vừa vặn, đẹp mắt */
+    box-shadow: 8px 8px 0px #000000; /* Đổ bóng đổ khối Neumorphism siêu ngầu */
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+    /* 3. Tiêu đề hộp (Ví dụ: "Để lại liên hệ", "Thông báo") */
+    .contact-box h2 {
+        font-size: 22px;
+        font-weight: 800;
+        color: #000000;
+        margin-top: 0;
+        margin-bottom: 20px;
+        text-transform: uppercase;
+        border-bottom: 3px dashed #000000; /* Đường gạch đứt đoạn cá tính */
+        padding-bottom: 10px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        justify-content: center;
+    }
+
+/* 4. Định dạng các nhóm hàng (Label + Input) */
+.form-group {
+    width: 100%; /* Đảm bảo chiếm hết chiều rộng được phép */
+    margin-bottom: 18px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Ép nhãn và ô nhập căn giữa theo trục dọc */
+    text-align: center;
+}
+
+    /* Nhãn chữ phía trên ô nhập */
+    .form-group label {
+        display: block;
+        font-weight: 700;
+        font-size: 13px;
+        margin-bottom: 6px;
+        color: #000000;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        justify-content: center;
+        text-align: center;
+    }
+
+    /* 5. Thiết kế các ô Input và Textarea (Hết thô cộc) */
+    .form-group input,
+    .form-group textarea {
+        width: 100%;
+        padding: 12px 15px;
+        font-size: 14px;
+        font-family: inherit;
+        background: #fdfdfd;
+        border: 2px solid var(--border-main); /* Viền đen rõ nét */
+        border-radius: 8px;
+        box-sizing: border-box;
+        transition: all 0.2s ease;
+        justify-content: center;
+    }
+
+        /* Hiệu ứng khi nhấn chuột vào ô nhập (Focus) */
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            background: #ffffff;
+            border-color: #00FF99; /* Đổi sang màu xanh đặc trưng của SOL khi gõ */
+            box-shadow: 3px 3px 0px #000000; /* Tạo bóng nhẹ khi đang tương tác */
+            transform: translate(-2px, -2px);
+        }
+
+    /* Giới hạn ô viết nội dung dài */
+    .form-group textarea {
+        resize: vertical;
+        min-height: 100px;
+    }
+
+/* 6. Nâng cấp nút "Gửi thông tin" cực chất */
+.btn-submit-contact {
+    width: 100%;
+    padding: 14px;
+    font-size: 15px;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: #000000;
+    background: #00FF99; /* Lấy màu xanh Neon thương hiệu của nút Tải xuống */
+    border: 2px solid #000000;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 4px 4px 0px var(--border-main); /* Đổ bóng cho nút */
+    transition: all 0.1s ease;
+    margin-top: 10px;
+    justify-content: center;
+}
+
+    /* Hiệu ứng di chuột qua nút */
+    .btn-submit-contact:hover {
+        background: #00e68a;
+        transform: translate(-1px, -1px);
+        box-shadow: 5px 5px 0px var(--border-main);
+    }
+
+    /* Hiệu ứng khi ấn nút (Click) */
+    .btn-submit-contact:active {
+        transform: translate(3px, 3px); /* Nút lún xuống cực chân thực */
+        box-shadow: 1px 1px 0px var(--border-main);
+    }
+
+
+
+
+
+/* --- CSS ĐIỀU CHỈNH BỐ CỤC 2 CỘT (FORM & MAPS) --- */
+.contact-container-flex {
+    display: flex;
+    flex-direction: row; /* Nằm ngang trên màn hình lớn */
+    gap: 40px; /* Khoảng cách giữa form và bản đồ */
+    width: 100%;
+    align-items: stretch; /* Cho 2 cột cao bằng nhau */
+    box-sizing: border-box;
+    padding: 10px;
+}
+
+/* Chia không gian: Cột Form chiếm 45%, cột Bản đồ chiếm 55% cho đẹp */
+.contact-form-side {
+    flex: 45;
+    display: flex;
+    flex-direction: column;
+}
+
+.contact-map-side {
+    flex: 55;
+    border: 3px solid var(--border-main);
+    border-radius: 16px;
+    overflow: hidden; /* Bo góc map mượt mà */
+    box-shadow: 6px 6px 0px var(--border-main); /* Đổ bóng neubrutalism ton-sur-ton */
+    min-height: 400px; /* Chiều cao tối thiểu của bản đồ */
+}
+
+    /* Đảm bảo bản đồ bung hết khung bọc */
+    .contact-map-side iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+        display: block;
+    }
+
+/* Tối ưu lại form để ôm vừa cột trái */
+.contact-form-side .contact-box {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+/* RESPONSIVE: Tự động xếp dọc khi xem trên điện thoại nhỏ */
+@media (max-width: 768px) {
+    .contact-container-flex {
+        flex-direction: column; /* Chuyển thành 1 cột dọc */
+        gap: 30px;
+    }
+
+    .contact-map-side {
+        min-height: 300px; /* Giảm chiều cao bản đồ trên mobile */
+    }
+}
